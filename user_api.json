@@ -1,0 +1,587 @@
+{
+	"info": {
+		"_postman_id": "39326d10-ca1d-4981-a30a-2ac5f978506e",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21362836"
+	},
+	"item": [
+		{
+			"name": "CreateUser. Valid Data /POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"created_user_id\", jsonData.id);",
+							"",
+							"var schema = {",
+							"    \"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+							"    \"$id\": \"http://example.com/example.json\",",
+							"    \"type\": \"object\",",
+							"    \"default\": {},",
+							"    \"title\": \"Root Schema\",",
+							"    \"required\": [",
+							"        \"name\",",
+							"        \"job\",",
+							"        \"id\",",
+							"        \"createdAt\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"name\": {",
+							"            \"type\": \"string\",",
+							"            \"default\": \"\",",
+							"            \"title\": \"The name Schema\",",
+							"            \"examples\": [",
+							"                \"afda\"",
+							"            ]",
+							"        },",
+							"        \"job\": {",
+							"            \"type\": \"string\",",
+							"            \"default\": \"\",",
+							"            \"title\": \"The job Schema\",",
+							"            \"examples\": [",
+							"                \"Customer Metrics Designer\"",
+							"            ]",
+							"        },",
+							"        \"id\": {",
+							"            \"type\": \"string\",",
+							"            \"default\": \"\",",
+							"            \"title\": \"The id Schema\",",
+							"            \"examples\": [",
+							"                \"343\"",
+							"            ]",
+							"        },",
+							"        \"createdAt\": {",
+							"            \"type\": \"string\",",
+							"            \"default\": \"\",",
+							"            \"title\": \"The createdAt Schema\",",
+							"            \"examples\": [",
+							"                \"2024-02-16T18:14:35.978Z\"",
+							"            ]",
+							"        }",
+							"    },",
+							"    \"examples\": [{",
+							"        \"name\": \"afda\",",
+							"        \"job\": \"Customer Metrics Designer\",",
+							"        \"id\": \"343\",",
+							"        \"createdAt\": \"2024-02-16T18:14:35.978Z\"",
+							"    }]",
+							"}",
+							"",
+							"pm.test('Schema is valid', function () {",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{$randomFirstName}}\",\n    \"job\": \"{{$randomJobTitle}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateUser. Invalid Field Types /POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"created_user_id\", jsonData.id);",
+							"",
+							"var schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"name\": {",
+							"      \"type\": \"number\"",
+							"    },",
+							"    \"job\": {",
+							"      \"type\": \"number\"",
+							"    },",
+							"    \"id\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"createdAt\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"name\",",
+							"    \"job\",",
+							"    \"id\",",
+							"    \"createdAt\"",
+							"  ]",
+							"}",
+							"",
+							"pm.test('Schema is valid', function () {",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": {{$randomInt}},\n    \"job\": {{$randomInt}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateUser. Without Body /POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var schema = {",
+							"    \"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+							"    \"$id\": \"http://example.com/example.json\",",
+							"    \"type\": \"object\",",
+							"    \"default\": {},",
+							"    \"title\": \"Root Schema\",",
+							"    \"required\": [",
+							"        \"id\",",
+							"        \"createdAt\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"id\": {",
+							"            \"type\": \"string\",",
+							"            \"default\": \"\",",
+							"            \"title\": \"The id Schema\",",
+							"            \"examples\": [",
+							"                \"255\"",
+							"            ]",
+							"        },",
+							"        \"createdAt\": {",
+							"            \"type\": \"string\",",
+							"            \"default\": \"\",",
+							"            \"title\": \"The createdAt Schema\",",
+							"            \"examples\": [",
+							"                \"2024-02-16T19:31:36.812Z\"",
+							"            ]",
+							"        }",
+							"    },",
+							"    \"examples\": [{",
+							"        \"id\": \"255\",",
+							"        \"createdAt\": \"2024-02-16T19:31:36.812Z\"",
+							"    }]",
+							"}",
+							"",
+							"pm.test('Schema is valid', function () {",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser. Valid Data /PUT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Validate name field\", function () {",
+							"    pm.expect(jsonData.name).to.eql(\"new_name\");",
+							"});",
+							"",
+							"pm.test(\"Validate job field\", function () {",
+							"    pm.expect(jsonData.job).to.eql(\"new_job\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"new_name\",\n    \"job\": \"new_job\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/{{created_user_id}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{created_user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateUser. Dublicate Data /POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"created_user_id\", jsonData.id);",
+							"",
+							"var schema = {",
+							"    \"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+							"    \"$id\": \"http://example.com/example.json\",",
+							"    \"type\": \"object\",",
+							"    \"default\": {},",
+							"    \"title\": \"Root Schema\",",
+							"    \"required\": [",
+							"        \"name\",",
+							"        \"job\",",
+							"        \"id\",",
+							"        \"createdAt\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"name\": {",
+							"            \"type\": \"string\",",
+							"            \"default\": \"\",",
+							"            \"title\": \"The name Schema\",",
+							"            \"examples\": [",
+							"                \"afda\"",
+							"            ]",
+							"        },",
+							"        \"job\": {",
+							"            \"type\": \"string\",",
+							"            \"default\": \"\",",
+							"            \"title\": \"The job Schema\",",
+							"            \"examples\": [",
+							"                \"Customer Metrics Designer\"",
+							"            ]",
+							"        },",
+							"        \"id\": {",
+							"            \"type\": \"string\",",
+							"            \"default\": \"\",",
+							"            \"title\": \"The id Schema\",",
+							"            \"examples\": [",
+							"                \"343\"",
+							"            ]",
+							"        },",
+							"        \"createdAt\": {",
+							"            \"type\": \"string\",",
+							"            \"default\": \"\",",
+							"            \"title\": \"The createdAt Schema\",",
+							"            \"examples\": [",
+							"                \"2024-02-16T18:14:35.978Z\"",
+							"            ]",
+							"        }",
+							"    },",
+							"    \"examples\": [{",
+							"        \"name\": \"afda\",",
+							"        \"job\": \"Customer Metrics Designer\",",
+							"        \"id\": \"343\",",
+							"        \"createdAt\": \"2024-02-16T18:14:35.978Z\"",
+							"    }]",
+							"}",
+							"",
+							"pm.test('Schema is valid', function () {",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"new_name\",\n    \"job\": \"new_job\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser. Without Body /PUT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody)",
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"default\": {},",
+							"    \"title\": \"Root Schema\",",
+							"    \"required\": [",
+							"        \"updatedAt\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"updatedAt\": {",
+							"            \"type\": \"string\",",
+							"            \"default\": \"\",",
+							"            \"title\": \"The updatedAt Schema\",",
+							"            \"examples\": [",
+							"                \"2024-02-16T19:36:43.813Z\"",
+							"            ]",
+							"        }",
+							"    },",
+							"    \"examples\": [{",
+							"        \"updatedAt\": \"2024-02-16T19:36:43.813Z\"",
+							"    }]",
+							"}",
+							"",
+							"pm.test('Schema is valid', function () {",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/{{created_user_id}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{created_user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserInfo /GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/{{created_user_id}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{created_user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser /DELETE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/{{created_user_id}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{created_user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUnexistedUser /DELETE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/{{created_user_id}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{created_user_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "created_user_id",
+			"value": ""
+		}
+	]
+}
